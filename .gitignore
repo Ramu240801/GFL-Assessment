@@ -1,0 +1,28 @@
+# --- Generated Delta lake storage (rebuildable from data/raw/ via the notebooks) ---
+delta/
+
+# Note: data/raw/ (the source CSV) IS committed — it is the pipeline input, not a
+# generated artifact, and the notebooks regenerate delta/ from it.
+
+# --- Python ---
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.python-version
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# --- Spark / Ivy / build noise ---
+spark-warehouse/
+metastore_db/
+derby.log
+*.log
+
+# --- OS / editor ---
+.DS_Store
+.idea/
+.vscode/
