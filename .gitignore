@@ -21,6 +21,7 @@ spark-warehouse/
 metastore_db/
 derby.log
 *.log
+.hadoop/
 
 # --- OS / editor ---
 .DS_Store

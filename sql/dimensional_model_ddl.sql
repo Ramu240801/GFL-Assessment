@@ -1,5 +1,5 @@
 -- =====================================================================
--- GFL Route Profitability â€” Dimensional Model DDL (flat star schema)
+-- GFL Route Profitability — Dimensional Model DDL (flat star schema)
 -- AUTO-GENERATED from the live Delta schemas in 03_gold_and_dimensional_model.ipynb.
 -- Grain of fact: one row per route per month. No surrogate keys (natural keys are
 -- stable + unique). Geography denormalized onto dim_route (no snowflake / SCD2).
