@@ -211,12 +211,42 @@ sub-10% toward the ~47% BU median — a commercial/pricing fix, not a service-qu
 ## 5. Data model
 
 Flat **star schema** ([notebook 03](notebooks/03_gold_and_dimensional_model.ipynb),
-DDL in [sql/dimensional_model_ddl.sql](sql/dimensional_model_ddl.sql)):
+DDL in [sql/dimensional_model_ddl.sql](sql/dimensional_model_ddl.sql), full ERD in
+[docs/erd.md](docs/erd.md)):
 
-```
-   dim_date (date_month_key)  --+
-                                 >--  fact_route_month_profitability
-   dim_route (route_id)       --+      (route_id, year, month)
+```mermaid
+erDiagram
+    DIM_DATE  ||--o{ FACT_ROUTE_MONTH_PROFITABILITY : "year + month"
+    DIM_ROUTE ||--o{ FACT_ROUTE_MONTH_PROFITABILITY : "route_id"
+
+    DIM_DATE {
+        int    date_month_key PK "year*100 + month"
+        int    year
+        int    month
+        string quarter
+        date   month_start_date
+    }
+    DIM_ROUTE {
+        string route_id PK
+        string region   "denormalized"
+        string bu       "denormalized"
+        string area     "denormalized"
+    }
+    FACT_ROUTE_MONTH_PROFITABILITY {
+        string  route_id PK, FK
+        int     year     PK, FK
+        int     month    PK, FK
+        string  region   "partition"
+        string  bu       "partition"
+        string  area     "partition"
+        bigint  n_route_days
+        double  total_revenue
+        double  gross_profit
+        double  weighted_gross_margin_pct
+        double  disposal_cost_per_tonne
+        boolean month_underperforming_flag
+        double  _and_34_more_measures
+    }
 ```
 
 - **Grain of the fact: route × month** — **4,035 rows** (not the full 4,320; routes
