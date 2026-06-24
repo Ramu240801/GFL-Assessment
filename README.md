@@ -127,7 +127,14 @@ normalizes it to null (297 real incidents remain).
 
 ## 3. Underperformance definition (reasoned from real percentiles)
 
-**A route-day is underperforming when `gross_margin_pct < 10%`.**
+**A route-day is underperforming when `gross_margin_pct` is below the worst-decile
+(P10) margin, rounded to a clean whole point — `10%` for this dataset.**
+
+This floor is **data-driven**: `compute_underperformance_threshold()`
+([src/metrics.py](src/metrics.py)) computes the exact P10 from whatever data is
+loaded and rounds it, so swapping the source CSV and rerunning **recalibrates the
+cutoff automatically** (Silver and Gold both derive the same value). For the current
+data P10 ≈ 9.67 → **10%**.
 
 Chosen from the **actual** `gross_margin_pct` distribution computed over all 12,000
 route-days ([notebook 02](notebooks/02_silver_transform.ipynb), Part B):

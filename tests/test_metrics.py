@@ -18,7 +18,12 @@ from pyspark.sql.types import (
 )
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
-from metrics import safe_div, add_underperforming_flag, UNDERPERFORMANCE_THRESHOLD  # noqa: E402
+from metrics import (  # noqa: E402
+    safe_div,
+    add_underperforming_flag,
+    compute_underperformance_threshold,
+    UNDERPERFORMANCE_THRESHOLD,
+)
 
 
 @pytest.fixture(scope="session")
@@ -102,3 +107,24 @@ def test_underperforming_flag_boundary_is_strict(spark):
     assert res["below"] is True      # 9.99 -> flagged
     assert res["above"] is False     # 10.01 -> not flagged
     assert res["healthy"] is False   # 47 -> not flagged
+
+
+# --------------------------------------------------------------------------- #
+# data-driven threshold
+# --------------------------------------------------------------------------- #
+def test_threshold_recalibrates_from_data_p10(spark):
+    """The floor tracks the data's own P10 (Spark exact quantile), rounded.
+    Margins 0..99 -> P10 = 9.0; a different distribution -> a different floor."""
+    df = spark.createDataFrame([(float(v),) for v in range(100)], ["gross_margin_pct"])
+    assert compute_underperformance_threshold(df, "gross_margin_pct", q=0.10) == 9.0
+    # Different distribution -> different floor (proves recalibration, not a constant).
+    df2 = spark.createDataFrame([(float(v),) for v in range(60)], ["gross_margin_pct"])
+    assert compute_underperformance_threshold(df2, "gross_margin_pct", q=0.10) == 5.0
+
+
+def test_threshold_falls_back_when_all_null(spark):
+    """All-null margin column -> documented fallback, not a crash."""
+    from pyspark.sql.types import StructType, StructField, DoubleType
+    schema = StructType([StructField("gross_margin_pct", DoubleType(), True)])
+    df = spark.createDataFrame([(None,), (None,)], schema)
+    assert compute_underperformance_threshold(df, "gross_margin_pct") == UNDERPERFORMANCE_THRESHOLD

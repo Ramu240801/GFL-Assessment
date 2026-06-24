@@ -7855,12 +7855,12 @@ computed live in this notebook; narrative is written <em>after</em> looking at t
 Ivy Default Cache set to: /Users/yashasvipamu/.ivy2.5.2/cache
 The jars for the packages stored in: /Users/yashasvipamu/.ivy2.5.2/jars
 io.delta#delta-spark_2.13 added as a dependency
-:: resolving dependencies :: org.apache.spark#spark-submit-parent-809a4a25-06f9-4db4-953d-fa79692b2339;1.0
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-dfb7f758-37c9-4c0a-b1ad-c887a3e40ffc;1.0
 	confs: [default]
 	found io.delta#delta-spark_2.13;4.0.1 in central
 	found io.delta#delta-storage;4.0.1 in central
 	found org.antlr#antlr4-runtime;4.13.1 in central
-:: resolution report :: resolve 126ms :: artifacts dl 5ms
+:: resolution report :: resolve 121ms :: artifacts dl 4ms
 	:: modules in use:
 	io.delta#delta-spark_2.13;4.0.1 from central in [default]
 	io.delta#delta-storage;4.0.1 from central in [default]
@@ -7871,23 +7871,17 @@ io.delta#delta-spark_2.13 added as a dependency
 	---------------------------------------------------------------------
 	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
 	---------------------------------------------------------------------
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>:: retrieving :: org.apache.spark#spark-submit-parent-809a4a25-06f9-4db4-953d-fa79692b2339
+:: retrieving :: org.apache.spark#spark-submit-parent-dfb7f758-37c9-4c0a-b1ad-c887a3e40ffc
 	confs: [default]
 	0 artifacts copied, 3 already retrieved (0kB/4ms)
-26/06/23 20:42:23 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+<pre>26/06/23 21:40:57 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
 Setting default log level to "WARN".
 To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
 </pre>
@@ -7896,38 +7890,26 @@ To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLeve
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>26/06/23 20:42:28 WARN SparkStringUtils: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+<pre>26/06/23 21:41:03 WARN SparkStringUtils: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>[Stage 2:&gt;                                                         (0 + 8) / 50]</pre>
+<pre>[Stage 2:&gt;                                                         (0 + 8) / 50][Stage 2:=========&gt;                                                (8 + 8) / 50]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>[Stage 2:=================&gt;                                       (15 + 8) / 50]</pre>
+<pre>[Stage 2:==========================&gt;                              (23 + 8) / 50][Stage 2:=====================================&gt;                   (33 + 8) / 50]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>[Stage 2:============================&gt;                            (25 + 8) / 50]</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>[Stage 2:==========================================&gt;              (37 + 8) / 50]                                                                                </pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>[Stage 8:============================================&gt;            (39 + 8) / 50]</pre>
+<pre>                                                                                </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -7936,12 +7918,6 @@ To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLeve
 <pre>Loaded from Delta — Silver rows: 12000 | Gold rows: 4035
 (raw CSV is NOT read in this notebook)
 </pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>                                                                                </pre>
 </div>
 </div>
 </div>

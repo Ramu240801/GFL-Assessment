@@ -10,9 +10,34 @@ from __future__ import annotations
 from pyspark.sql import Column
 from pyspark.sql import functions as F
 
-# Underperformance floor for gross_margin_pct, derived from the real P10 of the
-# data (~9.6%) in notebook 02 — a route-day below this is structurally fragile.
+# Fallback underperformance floor for gross_margin_pct, used only if the data-driven
+# computation can't run (e.g. an all-null margin column). The live threshold is
+# computed from each dataset's own P10 by compute_underperformance_threshold().
 UNDERPERFORMANCE_THRESHOLD = 10.0
+
+
+def compute_underperformance_threshold(
+    df,
+    margin_col: str = "gross_margin_pct",
+    q: float = 0.10,
+    fallback: float = UNDERPERFORMANCE_THRESHOLD,
+) -> float:
+    """Data-driven underperformance floor: the worst-decile (P10 by default) margin,
+    rounded to the nearest whole percentage point for a clean, communicable cutoff.
+
+    Recalibrates automatically on any dataset — swap the source CSV, rerun, and the
+    flag tracks that data's own distribution instead of a baked-in number. Uses an
+    EXACT quantile (relativeError=0.0) so Silver and Gold derive an identical value.
+    Returns ``fallback`` if the column is entirely null.
+    """
+    vals = (
+        df.select(margin_col)
+        .where(F.col(margin_col).isNotNull())
+        .approxQuantile(margin_col, [q], 0.0)
+    )
+    if not vals:
+        return float(fallback)
+    return float(round(vals[0]))
 
 
 def safe_div(num, den) -> Column:
